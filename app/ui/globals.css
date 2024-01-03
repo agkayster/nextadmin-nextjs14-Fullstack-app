@@ -9,6 +9,7 @@
 	--textSoft: #b7bac1;
 }
 
+/* take away all the margins and paddings globally*/
 * {
 	margin: 0;
 	padding: 0;
