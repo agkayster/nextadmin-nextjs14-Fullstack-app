@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import { menuItems } from '../../../components/menuItems';
 import MenuLink from './menuLink/menuLink';
+import { MdLogout } from 'react-icons/md';
 
 const Sidebar = () => {
 	return (
@@ -38,6 +41,12 @@ const Sidebar = () => {
 					</li>
 				))}
 			</ul>
+			<button
+				className='logout flex items-center gap-2.5 cursor-pointer 
+			rounded-xl my-1.5 mx-0 p-5 border-none w-full hover:bg-[#2e374a]'>
+				<MdLogout size={20} />
+				Logout
+			</button>
 		</div>
 	);
 };

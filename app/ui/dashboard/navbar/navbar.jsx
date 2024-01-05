@@ -26,7 +26,7 @@ const Navbar = () => {
 						className='input bg-transparent border-none text-white'
 					/>
 				</div>
-				<div className='icons flex items-center gap-5'>
+				<div className='icons flex items-center gap-5 cursor-pointer'>
 					<MdOutlineChat size={20} />
 					<MdNotifications size={20} />
 					<MdPublic size={20} />
