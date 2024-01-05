@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const TransactionsComponent = () => {
 	return (
-		<div className='cont bg-[#182237] p-5 rounded-xl'>
+		<div className='cont bg-[#182237] p-5 rounded-xl hover:bg-[#2e374a]'>
 			<h2 className='title mb-5 font-extralight text-[#b7bac1]'>
 				Latest Transactions
 			</h2>
