@@ -3,12 +3,35 @@
 }
 
 .sidebarMenu {
-	flex: 1;
 	background-color: var(--bgSoft);
+	flex: 1;
 	padding: 1.25rem;
 }
 
 .content {
 	flex: 4;
 	padding: 1.25rem;
+}
+
+.wrapper {
+	display: flex;
+	gap: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.main {
+	flex: 3;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.card {
+	display: flex;
+	gap: 1.25rem;
+	justify-content: space-between;
+}
+
+.side {
+	flex: 1;
 }
