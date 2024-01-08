@@ -6,6 +6,7 @@
 	background-color: var(--bgSoft);
 	flex: 1;
 	padding: 1.25rem;
+	min-height: 100vh;
 }
 
 .content {
