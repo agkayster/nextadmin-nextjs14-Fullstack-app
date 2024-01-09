@@ -32,36 +32,59 @@ const UsersPage = async () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td className='p-2.5'>
-							<div className='user flex items-center gap-2.5'>
-								<Image
-									src='/noavatar.png'
-									alt='user image'
-									width={40}
-									height={40}
-									className='userImage rounded-[50%] object-cover'
-								/>
-								John Doe
-							</div>
-						</td>
-						<td className='p-2.5'>john@gmail.com</td>
-						<td className='p-2.5'>01/02/24</td>
-						<td className='p-2.5'>Admin</td>
-						<td className='p-2.5'>active</td>
-						<td className='p-2.5'>
-							<div className='buttons flex gap-2.5'>
-								<Link href='/dashboard/users/test'>
-									<button className='button view py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-teal-500'>
-										View
-									</button>
-								</Link>
-								<button className='button delete py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-red-500'>
-									Delete
-								</button>
-							</div>
-						</td>
-					</tr>
+					{users.map(
+						({
+							_id: id,
+							createdAt,
+							username,
+							email,
+							password,
+							userImg,
+							isAdmin,
+							isActive,
+							phone,
+							address,
+						}) => (
+							<tr key={id}>
+								<td className='p-2.5'>
+									<div className='user flex items-center gap-2.5'>
+										<Image
+											src={userImg || `/noavatar.png`}
+											alt='user image'
+											width={40}
+											height={40}
+											className='userImage rounded-[50%] object-cover'
+										/>
+										{username}
+									</div>
+								</td>
+								<td className='p-2.5'>{email}</td>
+								<td className='p-2.5'>
+									{createdAt?.toString().slice(4, 16)}
+								</td>
+								<td className='p-2.5'>
+									{isAdmin ? 'Admin' : 'User'}
+								</td>
+
+								<td className='p-2.5'>
+									{isActive ? 'active' : 'passive'}
+								</td>
+
+								<td className='p-2.5'>
+									<div className='buttons flex gap-2.5'>
+										<Link href={`/dashboard/users/${id}`}>
+											<button className='button view py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-teal-500'>
+												View
+											</button>
+										</Link>
+										<button className='button delete py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-red-500'>
+											Delete
+										</button>
+									</div>
+								</td>
+							</tr>
+						)
+					)}
 				</tbody>
 			</table>
 			<Pagination />
