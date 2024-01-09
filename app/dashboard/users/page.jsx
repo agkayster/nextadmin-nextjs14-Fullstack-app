@@ -3,8 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Search from '@/app/ui/dashboard/search/search';
 import Pagination from '@/app/ui/dashboard/pagination/pagination';
+import { fetchUsers } from '@/app/lib/data';
 
-const UsersPage = () => {
+const UsersPage = async () => {
+	const users = await fetchUsers();
+	console.log('get users =>', users);
+
 	return (
 		<div className='cont bg-[#182237] p-5 rounded-xl mt-5'>
 			<div className='topContainer flex items-center justify-between'>
