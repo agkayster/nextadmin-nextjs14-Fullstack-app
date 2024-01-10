@@ -16,6 +16,8 @@ const Search = ({ placeholder }) => {
 		const { value } = e.target;
 		const params = new URLSearchParams(searchParams);
 
+		params.set('page', 1);
+		
 		if (value) {
 			/* set our search params to match our query for whatever we type in the search input. added a condition that the value typed in the search bar must be greater than 2 characters for the search to kick in */
 			value.length > 2 && params.set('q', value);
