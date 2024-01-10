@@ -5,9 +5,10 @@ import Search from '@/app/ui/dashboard/search/search';
 import Pagination from '@/app/ui/dashboard/pagination/pagination';
 import { fetchUsers } from '@/app/lib/data';
 
-const UsersPage = async () => {
-	const users = await fetchUsers();
-	console.log('get users =>', users);
+const UsersPage = async ({ searchParams }) => {
+	const q = searchParams?.q || '';
+
+	const users = await fetchUsers(q);
 
 	return (
 		<div className='cont bg-[#182237] p-5 rounded-xl mt-5'>
