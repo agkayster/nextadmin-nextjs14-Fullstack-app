@@ -4,8 +4,14 @@ import Image from 'next/image';
 
 import Search from '@/app/ui/dashboard/search/search';
 import Pagination from '@/app/ui/dashboard/pagination/pagination';
+import { fetchProducts } from '@/app/lib/data';
 
-const ProductsPage = () => {
+const ProductsPage = async ({ searchParams }) => {
+	const q = searchParams?.q || '';
+	const page = searchParams?.page || 1;
+
+	const { products, count } = await fetchProducts(q, page);
+
 	return (
 		<div className='cont bg-[#182237] p-5 rounded-xl mt-5'>
 			<div className='topContainer flex items-center justify-between'>
@@ -29,39 +35,59 @@ const ProductsPage = () => {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td className='p-2.5'>
-							<div className='product flex items-center gap-2.5'>
-								<Image
-									src='/noproduct.jpeg'
-									alt='user image'
-									width={40}
-									height={40}
-									className='productImage rounded-[50%] object-cover'
-								/>
-								IPhone
-							</div>
-						</td>
-						<td className='p-2.5'>IPhone 16</td>
-						<td className='p-2.5'>N25</td>
-						<td className='p-2.5'>01/02/24</td>
-						<td className='p-2.5'>34</td>
-						<td className='p-2.5'>
-							<div className='buttons flex gap-2.5'>
-								<Link href='/dashboard/products/test'>
-									<button className='button view py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-teal-500'>
-										View
-									</button>
-								</Link>
-								<button className='button delete py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-red-500'>
-									Delete
-								</button>
-							</div>
-						</td>
-					</tr>
+					{products.map(
+						({
+							_id: id,
+							title,
+							createdAt,
+							desc,
+							price,
+							stock,
+							productImg,
+							color,
+							size,
+							address,
+						}) => (
+							<tr key={id}>
+								<td className='p-2.5'>
+									<div className='product flex items-center gap-2.5'>
+										<Image
+											src={
+												productImg || '/noproduct.jpeg'
+											}
+											alt='user image'
+											width={40}
+											height={40}
+											className='productImage rounded-[50%] object-cover'
+										/>
+										{title}
+									</div>
+								</td>
+								<td className='p-2.5'>{desc}</td>
+								<td className='p-2.5'>{price}</td>
+								<td className='p-2.5'>
+									{createdAt?.toString().slice(4, 16)}
+								</td>
+								<td className='p-2.5'>{stock}</td>
+								<td className='p-2.5'>
+									<div className='buttons flex gap-2.5'>
+										<Link
+											href={`/dashboard/products/${id}`}>
+											<button className='button view py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-teal-500'>
+												View
+											</button>
+										</Link>
+										<button className='button delete py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-red-500'>
+											Delete
+										</button>
+									</div>
+								</td>
+							</tr>
+						)
+					)}
 				</tbody>
 			</table>
-			<Pagination />
+			<Pagination count={count} />
 		</div>
 	);
 };
