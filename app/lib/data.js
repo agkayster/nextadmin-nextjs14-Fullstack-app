@@ -5,7 +5,7 @@ export const fetchUsers = async (q, page) => {
 	const regex = new RegExp(q, 'i');
 
 	/* list or number of people per page */
-	const ITEM_PER_PAGE = 2;
+	const ITEM_PER_PAGE = 6;
 
 	/* skip enables us to move to the next page in our pagination. you can use .count() or .countDocuments() below */
 	try {
@@ -26,7 +26,7 @@ export const fetchProducts = async (q, page) => {
 	const regex = new RegExp(q, 'i');
 
 	/* list or number of people per page */
-	const ITEM_PER_PAGE = 2;
+	const ITEM_PER_PAGE = 6;
 
 	/* skip enables us to move to the next page in our pagination. you can use .count() or .countDocuments() below */
 	try {
