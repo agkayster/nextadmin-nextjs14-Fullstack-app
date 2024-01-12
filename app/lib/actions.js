@@ -1,12 +1,13 @@
+'use server'; /* if you are using multiple server actions */
+
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
 
-import { User } from './models';
+import { Product, User } from './models';
 import { connectToDB } from './utils';
 
 export const addUser = async (formData) => {
-	'use server';
 	const { username, email, password, phone, address, isAdmin, isActive } =
 		Object.fromEntries(formData);
 
@@ -39,4 +40,31 @@ export const addUser = async (formData) => {
 
 	revalidatePath('/dashboard/users');
 	redirect('/dashboard/users');
+};
+
+export const addProduct = async (formData) => {
+	const { title, desc, price, stock, color, size, address } =
+		Object.fromEntries(formData);
+
+	try {
+		connectToDB();
+
+		const newProduct = new Product({
+			title,
+			desc,
+			price,
+			stock,
+			color,
+			size,
+			address,
+		});
+
+		await newProduct.save();
+	} catch (error) {
+		console.log('get error =>', error);
+		throw new Error('failed to send');
+	}
+
+	revalidatePath('/dashboard/products');
+	redirect('/dashboard/products');
 };
