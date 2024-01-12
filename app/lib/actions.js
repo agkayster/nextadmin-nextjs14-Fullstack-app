@@ -96,5 +96,5 @@ export const deleteUser = async (formData) => {
 		throw new Error('failed to delete product');
 	}
 
-	revalidatePath('/dashboard/products');
+	revalidatePath('/dashboard/users');
 };
