@@ -1,9 +1,12 @@
 import React from 'react';
+import { addProduct } from '@/app/lib/actions';
 
 const AddProductPage = () => {
 	return (
 		<div className='cont bg-[#182237] p-5 rounded-xl mt-5'>
-			<form className='form flex flex-wrap justify-between'>
+			<form
+				action={addProduct}
+				className='form flex flex-wrap justify-between'>
 				<input
 					className='title p-8 w-[45%] bg-[#151c2c] text-white rounded-md mb-8 border-solid 
 					border-2 border-[#2e374a]'
