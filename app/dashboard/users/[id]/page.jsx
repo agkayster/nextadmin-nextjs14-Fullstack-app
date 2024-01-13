@@ -1,7 +1,23 @@
 import React from 'react';
 import Image from 'next/image';
+import { fetchSingleUser } from '@/app/lib/data';
 
-const SingleUserPage = () => {
+const SingleUserPage = async ({ params }) => {
+	/* use params and destructure [id] or whatever you write inside the [] bracket */
+	const { id } = params;
+
+	const {
+		username,
+		email,
+		password,
+		userImg,
+		isAdmin,
+		isActive,
+		phone,
+		address,
+		createdAt,
+	} = await fetchSingleUser(id);
+
 	return (
 		<div className='cont flex gap-[3.13rem] mt-5'>
 			<div className='infoContainer flex-1 bg-[#182237] p-5 rounded-xl font-bold text-[#b7bac1] text-center h-fit'>
@@ -9,13 +25,13 @@ const SingleUserPage = () => {
 				<div className='imageContainer w-[100%] h-[18.75rem] relative rounded-xl overflow-hidden mb-5'>
 					{/* use fill, so image fills it's div container */}
 					<Image
-						src='/noavatar.png'
+						src={userImg || `/noavatar.png`}
 						alt='user image'
 						fill
 						className='singleUserImage'
 					/>
 				</div>
-				<h1 className='name'>John Doe</h1>
+				<h1 className='name'>{username}</h1>
 			</div>
 			<div className='formContainer flex-3 bg-[#182237] p-5 rounded-xl w-[65%]'>
 				<form className='form flex flex-col'>

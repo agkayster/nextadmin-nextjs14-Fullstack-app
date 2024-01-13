@@ -72,6 +72,7 @@ const ProductsPage = async ({ searchParams }) => {
 								<td className='p-2.5'>{stock}</td>
 								<td className='p-2.5'>
 									<div className='buttons flex gap-2.5'>
+										{/* pass id or whatever is inside the [] bracket to view single product */}
 										<Link
 											href={`/dashboard/products/${id}`}>
 											<button className='button view py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-teal-500'>
