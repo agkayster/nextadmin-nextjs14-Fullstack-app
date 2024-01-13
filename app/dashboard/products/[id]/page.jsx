@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { fetchSingleProduct } from '@/app/lib/data';
+import { updateProduct } from '@/app/lib/actions';
 
 const SingleProductPage = async ({ params }) => {
 	/* destructure id from params */
@@ -35,12 +36,13 @@ const SingleProductPage = async ({ params }) => {
 				<h1 className='name'>{title}</h1>
 			</div>
 			<div className='formContainer flex-3 bg-[#182237] p-5 rounded-xl w-[65%]'>
-				<form className='form flex flex-col'>
+				<form action={updateProduct} className='form flex flex-col'>
+					<input type='hidden' name='id' value={id} />
 					<label className='text-xs'>Title</label>
 					<input
 						type='text'
 						name='title'
-						placeholder='iphone'
+						placeholder={title}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 						// className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white'
 					/>
@@ -48,28 +50,28 @@ const SingleProductPage = async ({ params }) => {
 					<input
 						type='number'
 						name='price'
-						placeholder=''
+						placeholder={price}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 					/>
 					<label className='text-xs'>Stock</label>
 					<input
 						type='number'
 						name='Stock'
-						placeholder='34'
+						placeholder={stock}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 					/>
 					<label className='text-xs'>Color</label>
 					<input
 						type='text'
 						name='color'
-						placeholder='blue'
+						placeholder={color}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 					/>
 					<label className='text-xs'>Size</label>
 					<input
 						type='text'
 						name='Size'
-						placeholder=''
+						placeholder={size}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 					/>
 
@@ -88,7 +90,7 @@ const SingleProductPage = async ({ params }) => {
 						name='desc'
 						id='desc'
 						rows='16'
-						placeholder='description'
+						placeholder={desc}
 						className='textarea p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] 
             text-white my-2.5'></textarea>
 					<button
