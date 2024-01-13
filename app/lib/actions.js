@@ -42,6 +42,40 @@ export const addUser = async (formData) => {
 	redirect('/dashboard/users');
 };
 
+export const updateUser = async (formData) => {
+	const { id, username, email, password, phone, address, isAdmin, isActive } =
+		Object.fromEntries(formData);
+
+	try {
+		connectToDB();
+
+		const updateFields = {
+			username,
+			email,
+			password,
+			phone,
+			address,
+			isAdmin,
+			isActive,
+		};
+
+		/* if user puts an empty string or undefined parameters in our fields above, delete it. Object.keys puts the properties in updateFields in an array format */
+		Object.keys(updateFields).forEach(
+			(key) =>
+				(updateFields[key] === '' || undefined) &&
+				delete updateFields[key]
+		);
+
+		await User.findByIdAndUpdate(id, updateFields);
+	} catch (error) {
+		console.log('get error =>', error);
+		throw new Error('failed to update user!');
+	}
+
+	revalidatePath('/dashboard/users');
+	redirect('/dashboard/users');
+};
+
 export const addProduct = async (formData) => {
 	const { title, desc, price, stock, color, size, address } =
 		Object.fromEntries(formData);
