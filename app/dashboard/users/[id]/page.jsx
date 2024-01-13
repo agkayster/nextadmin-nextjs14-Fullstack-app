@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { fetchSingleUser } from '@/app/lib/data';
+import { updateUser } from '@/app/lib/actions';
 
 const SingleUserPage = async ({ params }) => {
 	/* use params and destructure [id] or whatever you write inside the [] bracket */
@@ -34,12 +35,14 @@ const SingleUserPage = async ({ params }) => {
 				<h1 className='name'>{username}</h1>
 			</div>
 			<div className='formContainer flex-3 bg-[#182237] p-5 rounded-xl w-[65%]'>
-				<form className='form flex flex-col'>
+				{/* implement our form server action to use the updateUser function */}
+				<form action={updateUser} className='form flex flex-col'>
+					<input type='hidden' name='id' value={id} />
 					<label className='text-xs'>Username</label>
 					<input
 						type='text'
 						name='username'
-						placeholder='John Doe'
+						placeholder={username}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 						// className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white'
 					/>
@@ -47,7 +50,7 @@ const SingleUserPage = async ({ params }) => {
 					<input
 						type='email'
 						name='email'
-						placeholder='JohnDoe@gmail.com'
+						placeholder={email}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 					/>
 					<label className='text-xs'>Password</label>
@@ -61,30 +64,38 @@ const SingleUserPage = async ({ params }) => {
 					<input
 						type='phone'
 						name='phone'
-						placeholder='+4412345'
+						placeholder={phone}
 						className='input p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'
 					/>
 					<label className='text-xs'>Address</label>
 					<textarea
 						type='text'
 						name='address'
-						placeholder='14 downing street'
+						placeholder={address}
 						className='textarea p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'></textarea>
 					<label className='text-xs'>Is Admin?</label>
 					<select
 						name='isAdmin'
 						id='isAdmin'
 						className='select p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'>
-						<option value={true}>Yes</option>
-						<option value={false}>No</option>
+						<option value={true} selected={isAdmin}>
+							Yes
+						</option>
+						<option value={false} selected={!isAdmin}>
+							No
+						</option>
 					</select>
 					<label className='text-xs'>Is Active?</label>
 					<select
 						name='isActive'
 						id='isActive'
 						className='select p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] text-white my-2.5'>
-						<option value={true}>Yes</option>
-						<option value={false}>No</option>
+						<option value={true} selected={isActive}>
+							Yes
+						</option>
+						<option value={false} selected={!isActive}>
+							No
+						</option>
 					</select>
 					<button
 						type='submit'
