@@ -76,6 +76,23 @@ export const updateUser = async (formData) => {
 	redirect('/dashboard/users');
 };
 
+export const deleteUser = async (formData) => {
+	const { id } = Object.fromEntries(formData);
+
+	try {
+		connectToDB();
+
+		await User.findByIdAndDelete(id);
+	} catch (error) {
+		console.log('get error =>', error);
+		throw new Error('failed to delete product');
+	}
+
+	revalidatePath('/dashboard/users');
+};
+
+//--------------------------------------------------------------------------------------------------------
+
 export const addProduct = async (formData) => {
 	const { title, desc, price, stock, color, size, address } =
 		Object.fromEntries(formData);
@@ -103,6 +120,40 @@ export const addProduct = async (formData) => {
 	redirect('/dashboard/products');
 };
 
+export const updateProduct = async (formData) => {
+	const { id, title, desc, price, stock, color, size, address } =
+		Object.fromEntries(formData);
+
+	try {
+		connectToDB();
+
+		const updateFields = {
+			title,
+			desc,
+			price,
+			stock,
+			color,
+			size,
+			address,
+		};
+
+		/* if user puts an empty string or undefined parameters in our fields above, delete it. Object.keys puts the properties in updateFields in an array format */
+		Object.keys(updateFields).forEach(
+			(key) =>
+				(updateFields[key] === '' || undefined) &&
+				delete updateFields[key]
+		);
+
+		await Product.findByIdAndUpdate(id, updateFields);
+	} catch (error) {
+		console.log('get error =>', error);
+		throw new Error('failed to update product!');
+	}
+
+	revalidatePath('/dashboard/products');
+	redirect('/dashboard/products');
+};
+
 export const deleteProduct = async (formData) => {
 	const { id } = Object.fromEntries(formData);
 
@@ -116,19 +167,4 @@ export const deleteProduct = async (formData) => {
 	}
 
 	revalidatePath('/dashboard/products');
-};
-
-export const deleteUser = async (formData) => {
-	const { id } = Object.fromEntries(formData);
-
-	try {
-		connectToDB();
-
-		await User.findByIdAndDelete(id);
-	} catch (error) {
-		console.log('get error =>', error);
-		throw new Error('failed to delete product');
-	}
-
-	revalidatePath('/dashboard/users');
 };
