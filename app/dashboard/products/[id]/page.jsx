@@ -1,7 +1,24 @@
 import React from 'react';
 import Image from 'next/image';
+import { fetchSingleProduct } from '@/app/lib/data';
 
-const SingleProductPage = () => {
+const SingleProductPage = async ({ params }) => {
+	/* destructure id from params */
+	const { id } = params;
+
+	/* destructure below from fetchSingleProduct */
+	const {
+		title,
+		desc,
+		price,
+		stock,
+		productImg,
+		color,
+		size,
+		address,
+		createdAt,
+	} = await fetchSingleProduct(id);
+
 	return (
 		<div className='cont flex gap-[3.13rem] mt-5'>
 			<div className='infoContainer flex-1 bg-[#182237] p-5 rounded-xl font-bold text-[#b7bac1] text-center h-fit'>
@@ -9,13 +26,13 @@ const SingleProductPage = () => {
 				<div className='imageContainer w-[100%] h-[18.75rem] relative rounded-xl overflow-hidden mb-5'>
 					{/* use fill, so image fills it's div container */}
 					<Image
-						src='/noproduct.jpeg'
+						src={productImg || '/noproduct.jpeg'}
 						alt='user image'
 						fill
 						className='singleProductImage'
 					/>
 				</div>
-				<h1 className='name'>IPhone 16</h1>
+				<h1 className='name'>{title}</h1>
 			</div>
 			<div className='formContainer flex-3 bg-[#182237] p-5 rounded-xl w-[65%]'>
 				<form className='form flex flex-col'>

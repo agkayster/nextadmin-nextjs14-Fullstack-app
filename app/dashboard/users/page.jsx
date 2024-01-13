@@ -75,6 +75,7 @@ const UsersPage = async ({ searchParams }) => {
 
 								<td className='p-2.5'>
 									<div className='buttons flex gap-2.5'>
+										{/* pass id or whatever is inside the [] bracket, to view single user */}
 										<Link href={`/dashboard/users/${id}`}>
 											<button className='button view py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-teal-500'>
 												View
