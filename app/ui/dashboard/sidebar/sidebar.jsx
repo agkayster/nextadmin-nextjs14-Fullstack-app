@@ -1,12 +1,15 @@
-'use client';
+// 'use client';
 
 import React from 'react';
 import Image from 'next/image';
 import { menuItems } from '../../../components/menuItems';
 import MenuLink from './menuLink/menuLink';
 import { MdLogout } from 'react-icons/md';
+import { auth, signOut } from '@/app/auth';
 
-const Sidebar = () => {
+const Sidebar = async () => {
+	const session = await auth();
+	console.log('get session =>', session);
 	return (
 		<div className='cont sticky top-10'>
 			<div className='user flex items-center gap-5 mb-5'>
@@ -41,12 +44,18 @@ const Sidebar = () => {
 					</li>
 				))}
 			</ul>
-			<button
-				className='logout flex items-center gap-2.5 cursor-pointer 
+			<form
+				action={async () => {
+					'use server';
+					await signOut();
+				}}>
+				<button
+					className='logout flex items-center gap-2.5 cursor-pointer 
 			rounded-xl my-1.5 mx-0 p-5 border-none w-full hover:bg-[#2e374a]'>
-				<MdLogout size={20} />
-				Logout
-			</button>
+					<MdLogout size={20} />
+					Logout
+				</button>
+			</form>
 		</div>
 	);
 };
