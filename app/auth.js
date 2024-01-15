@@ -50,4 +50,22 @@ export const { signIn, signOut, auth } = NextAuth({
 			},
 		}),
 	],
+	callbacks: {
+		/* search for our user and pass the username and image into jwt */
+		async jwt({ token, user }) {
+			if (user) {
+				token.username = user.username;
+				token.userImg = user.userImg;
+			}
+			return token;
+		},
+		/* pass token information to session */
+		async session({ token, session }) {
+			if (token) {
+				session.username = token.username;
+				session.userImg = token.userImg;
+			}
+			return session;
+		},
+	},
 });
