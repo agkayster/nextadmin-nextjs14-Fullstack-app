@@ -173,7 +173,7 @@ export const deleteProduct = async (formData) => {
 
 //===================================================================================================================>
 
-export const authenticate = async (formData) => {
+export const authenticate = async (prevState, formData) => {
 	const { username, password } = Object.fromEntries(formData);
 
 	try {
@@ -183,9 +183,9 @@ export const authenticate = async (formData) => {
 		if (error instanceof AuthError) {
 			switch (error.type) {
 				case 'CredentialsSignin':
-					return { error: 'Invalid credentials.' };
+					return 'Invalid credentials.';
 				default:
-					return { error: 'Something went wrong.' };
+					return 'Something went wrong.';
 			}
 		}
 		throw error;
