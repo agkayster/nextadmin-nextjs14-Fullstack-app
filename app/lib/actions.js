@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import { Product, User } from './models';
 import { connectToDB } from './utils';
 import { signIn } from '../auth';
+import { AuthError } from 'next-auth';
 
 export const addUser = async (formData) => {
 	const { username, email, password, phone, address, isAdmin, isActive } =
@@ -175,6 +176,18 @@ export const deleteProduct = async (formData) => {
 export const authenticate = async (formData) => {
 	const { username, password } = Object.fromEntries(formData);
 
-	// do not put signIn function inside try/catch block
-	await signIn('credentials', { username, password });
+	try {
+		// do not put signIn function inside try/catch block
+		await signIn('credentials', { username, password });
+	} catch (error) {
+		if (error instanceof AuthError) {
+			switch (error.type) {
+				case 'CredentialsSignin':
+					return { error: 'Invalid credentials.' };
+				default:
+					return { error: 'Something went wrong.' };
+			}
+		}
+		throw error;
+	}
 };
