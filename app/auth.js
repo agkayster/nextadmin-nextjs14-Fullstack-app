@@ -59,11 +59,11 @@ export const { signIn, signOut, auth } = NextAuth({
 			}
 			return token;
 		},
-		/* pass token information to session */
+		/* pass token information to session, which would help us reach it inside our component */
 		async session({ token, session }) {
 			if (token) {
-				session.username = token.username;
-				session.userImg = token.userImg;
+				session.user.username = token.username;
+				session.user.userImg = token.userImg;
 			}
 			return session;
 		},

@@ -175,10 +175,6 @@ export const deleteProduct = async (formData) => {
 export const authenticate = async (formData) => {
 	const { username, password } = Object.fromEntries(formData);
 
-	try {
-		await signIn('credentials', { username, password });
-	} catch (error) {
-		console.log('get error =>', error);
-		throw new Error(error);
-	}
+	// do not put signIn function inside try/catch block
+	await signIn('credentials', { username, password });
 };
