@@ -1,9 +1,12 @@
 import React from 'react';
+import { authenticate } from '../lib/actions';
 
 const LoginPage = () => {
 	return (
 		<div className='cont w-full h-screen flex items-center justify-center'>
-			<form className='form bg-[#182237] p-[3.13rem] rounded-xl w-[31.25rem] h-[31.25rem] flex flex-col justify-center gap-8'>
+			<form
+				action={authenticate}
+				className='form bg-[#182237] p-[3.13rem] rounded-xl w-[31.25rem] h-[31.25rem] flex flex-col justify-center gap-8'>
 				<h1 className='text-center font-bold text-lg'>Login</h1>
 				<input
 					type='text'
