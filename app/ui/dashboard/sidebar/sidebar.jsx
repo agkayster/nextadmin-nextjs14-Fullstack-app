@@ -8,20 +8,22 @@ import { MdLogout } from 'react-icons/md';
 import { auth, signOut } from '@/app/auth';
 
 const Sidebar = async () => {
-	const session = await auth();
-	console.log('get session =>', session);
+	const {
+		user: { username, email, userImg },
+	} = await auth();
+
 	return (
 		<div className='cont sticky top-10'>
 			<div className='user flex items-center gap-5 mb-5'>
 				<Image
-					src='/noavatar.png'
+					src={userImg || '/noavatar.png'}
 					alt='user image'
 					width='50'
 					height='50'
 					className='userImage rounded-[50%] object-cover'
 				/>
 				<div className='userDetail flex flex-col'>
-					<span className='userName font-medium'>John Doe</span>
+					<span className='userName font-medium'>{username}</span>
 					<span className='userTitle text-xs text-[#b7bac1]'>
 						Administrator
 					</span>
