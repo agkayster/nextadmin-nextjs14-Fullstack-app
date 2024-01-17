@@ -15,6 +15,12 @@ const AddUsersPage = () => {
 					name='username'
 					required
 				/>
+				<div
+					className='imgCont flex flex-col w-fit gap-2.5 bg-[#151c2c] p-8 rounded-md mb-8 border-solid 
+					border-2 border-[#2e374a]'>
+					<label htmlFor=''>Select Image to upload</label>
+					<input type='file' id='userImg' name='userImg' required />
+				</div>
 				<input
 					type='email'
 					placeholder='email'
