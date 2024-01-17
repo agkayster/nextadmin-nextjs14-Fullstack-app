@@ -8,15 +8,39 @@ import { Product, User } from './models';
 import { connectToDB } from './utils';
 import { signIn } from '../auth';
 import { AuthError } from 'next-auth';
+import { uploadToCloudinary } from './cloudinary';
 
 export const addUser = async (formData) => {
-	const { username, email, password, phone, address, isAdmin, isActive } =
-		Object.fromEntries(formData);
+	const {
+		username,
+		email,
+		password,
+		phone,
+		address,
+		isAdmin,
+		isActive,
+		userImg,
+	} = Object.fromEntries(formData);
 
 	const saltRounds = 10;
 
 	try {
 		connectToDB();
+
+		// adding our image to our add user creation
+		const file = userImg;
+		const arrayBuffer = await file.arrayBuffer();
+		const buffer = new Uint8Array(arrayBuffer);
+		const newImg = await uploadToCloudinary(buffer);
+		// console.log('get new image =>', newImg);
+
+		// extract our image secure url
+		let image = newImg.secure_url;
+		image = image
+			.split('/image/upload')
+			.join('/image/upload/fl_attachment');
+
+		const cloudinary_id = newImg.public_id;
 
 		const salt = await bcrypt.genSalt(saltRounds);
 
@@ -26,9 +50,11 @@ export const addUser = async (formData) => {
 		/*pass our hashed password into our model, which is then saved in our Database */
 		const newUser = new User({
 			username,
-			email,
+			userImg: image,
 			password: hashedPassword,
+			email,
 			phone,
+			cloudinary_id,
 			address,
 			isAdmin,
 			isActive,
@@ -36,7 +62,7 @@ export const addUser = async (formData) => {
 
 		await newUser.save();
 	} catch (error) {
-		console.log('get error =>', error);
+		console.log('get user error =>', error);
 		throw new Error('failed to send');
 	}
 

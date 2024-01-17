@@ -44,7 +44,7 @@ const ProductsPage = async ({ searchParams }) => {
 							desc,
 							price,
 							stock,
-							productImg,
+							image,
 							color,
 							size,
 							address,
@@ -53,9 +53,7 @@ const ProductsPage = async ({ searchParams }) => {
 								<td className='p-2.5'>
 									<div className='product flex items-center gap-2.5'>
 										<Image
-											src={
-												productImg || '/noproduct.jpeg'
-											}
+											src={image || '/noproduct.jpeg'}
 											alt='user image'
 											width={40}
 											height={40}

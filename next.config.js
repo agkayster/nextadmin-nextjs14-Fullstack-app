@@ -10,6 +10,12 @@ module.exports = {
 				port: '',
 				pathname: '/photos/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'res.cloudinary.com',
+				port: '',
+				pathname: '/ejikedinary/**',
+			},
 		],
 	},
 };
