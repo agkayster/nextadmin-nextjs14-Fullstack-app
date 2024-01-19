@@ -7,6 +7,7 @@ import { fetchUsers } from '@/app/lib/data';
 import { deleteUser } from '@/app/lib/actions';
 
 const UsersPage = async ({ searchParams }) => {
+	//q here means the query parameter search
 	const q = searchParams?.q || '';
 	const page = searchParams?.page || 1;
 
