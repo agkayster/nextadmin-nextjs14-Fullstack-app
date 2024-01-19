@@ -1,6 +1,7 @@
 import { User, Product } from './models';
 import { connectToDB } from './utils';
 
+// q here means the "query" parameter
 export const fetchUsers = async (q, page) => {
 	const regex = new RegExp(q, 'i');
 
