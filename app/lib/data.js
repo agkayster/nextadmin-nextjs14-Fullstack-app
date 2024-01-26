@@ -1,5 +1,6 @@
 import { User, Product } from './models';
 import { connectToDB } from './utils';
+import { auth } from '../auth';
 
 // q here means the "query" parameter
 export const fetchUsers = async (q, page) => {
@@ -48,6 +49,9 @@ export const fetchProducts = async (q, page) => {
 		const count = await Product.find({
 			title: { $regex: regex },
 		}).count();
+		// const products = await Product.find({ createdBy: sub })
+		// 	.limit(ITEM_PER_PAGE)
+		// 	.skip(ITEM_PER_PAGE * (page - 1));
 		const products = await Product.find({ title: { $regex: regex } })
 			.limit(ITEM_PER_PAGE)
 			.skip(ITEM_PER_PAGE * (page - 1));

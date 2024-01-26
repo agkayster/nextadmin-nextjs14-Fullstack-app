@@ -41,6 +41,7 @@ const ProductsPage = async ({ searchParams }) => {
 							_id: id,
 							title,
 							createdAt,
+							createdBy,
 							desc,
 							price,
 							stock,
@@ -82,6 +83,11 @@ const ProductsPage = async ({ searchParams }) => {
 												type='hidden'
 												name='id'
 												value={id.toString()}
+											/>
+											<input
+												type='hidden'
+												name='createdBy'
+												value={createdBy.toString()}
 											/>
 											<button className='button delete py-1.5 px-2.5 rounded-[0.313rem] text-white border-none cursor-pointer bg-red-500'>
 												Delete

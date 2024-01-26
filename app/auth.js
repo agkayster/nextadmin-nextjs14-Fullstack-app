@@ -57,6 +57,7 @@ export const { signIn, signOut, auth } = NextAuth({
 				token.username = user.username;
 				token.userImg = user.userImg;
 			}
+			// console.log('get token =>', token);
 			return token;
 		},
 		/* pass token information to session, which would help us reach it inside our component */
@@ -64,7 +65,9 @@ export const { signIn, signOut, auth } = NextAuth({
 			if (token) {
 				session.user.username = token.username;
 				session.user.userImg = token.userImg;
+				session.user.sub = token.sub;
 			}
+			// console.log('get session =>', session);
 			return session;
 		},
 	},
