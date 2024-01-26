@@ -36,6 +36,12 @@ const productSchema = new Schema(
 		color: { type: String },
 		size: { type: String },
 		address: { type: String },
+		// createdBy does not need to be filled in create job or update/edit job as it references the User Model //
+		createdBy: {
+			type: mongoose.Types.ObjectId,
+			ref: 'User', // ref means the schema we are referencing. to get the user who created a job, we take the schema from the User schema //
+			required: [true, 'Please provide a user'],
+		},
 	},
 	{ timestamps: true }
 );

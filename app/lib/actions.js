@@ -6,9 +6,10 @@ import bcrypt from 'bcrypt';
 
 import { Product, User } from './models';
 import { connectToDB } from './utils';
-import { signIn } from '../auth';
+import { signIn, auth } from '../auth';
 import { AuthError } from 'next-auth';
 import { uploadToCloudinary } from './cloudinary';
+import { MdConstruction } from 'react-icons/md';
 
 export const addUser = async (formData) => {
 	const {
@@ -122,7 +123,8 @@ export const deleteUser = async (formData) => {
 //--------------------------------------------------------------------------------------------------------
 
 export const addProduct = async (formData) => {
-	const { title, desc, price, stock, color, size, address } =
+	/* we get createdBy from AddProduct Page via the input value for createdBy */
+	const { title, desc, price, stock, color, size, address, createdBy } =
 		Object.fromEntries(formData);
 
 	try {
@@ -136,9 +138,11 @@ export const addProduct = async (formData) => {
 			color,
 			size,
 			address,
+			createdBy,
 		});
 
 		await newProduct.save();
+		console.log('get new prod =>', newProduct);
 	} catch (error) {
 		console.log('get error =>', error);
 		throw new Error('failed to send');
@@ -149,33 +153,48 @@ export const addProduct = async (formData) => {
 };
 
 export const updateProduct = async (formData) => {
-	const { id, title, desc, price, stock, color, size, address } =
+	const { id, title, desc, price, stock, color, size, address, createdBy } =
 		Object.fromEntries(formData);
 
-	try {
-		connectToDB();
+	/* we get the current logged in user via authentication in auth.js */
+	const {
+		user: { username, sub },
+	} = await auth();
 
-		const updateFields = {
-			title,
-			desc,
-			price,
-			stock,
-			color,
-			size,
-			address,
-		};
+	/* compare the current logged in user to the createdBy id. If the createdBy id does not match the sub, 
+	throw an error */
+	if (createdBy !== sub) {
+		throw new Error("You can't update this job");
+	} else {
+		/* else everything below takes place */
+		try {
+			connectToDB();
 
-		/* if user puts an empty string or undefined parameters in our fields above, delete it. Object.keys puts the properties in updateFields in an array format */
-		Object.keys(updateFields).forEach(
-			(key) =>
-				(updateFields[key] === '' || undefined) &&
-				delete updateFields[key]
-		);
+			const updateFields = {
+				title,
+				desc,
+				price,
+				stock,
+				color,
+				size,
+				address,
+			};
 
-		await Product.findByIdAndUpdate(id, updateFields);
-	} catch (error) {
-		console.log('get error =>', error);
-		throw new Error('failed to update product!');
+			/* if user puts an empty string or undefined parameters in our fields above, delete it. Object.keys puts the properties in updateFields in an array format */
+			Object.keys(updateFields).forEach(
+				(key) =>
+					(updateFields[key] === '' || undefined) &&
+					delete updateFields[key]
+			);
+
+			await Product.findByIdAndUpdate(
+				{ _id: id, createdBy },
+				updateFields
+			);
+		} catch (error) {
+			console.log('get error =>', error);
+			throw new Error('failed to update product!');
+		}
 	}
 
 	revalidatePath('/dashboard/products');
@@ -183,15 +202,27 @@ export const updateProduct = async (formData) => {
 };
 
 export const deleteProduct = async (formData) => {
-	const { id } = Object.fromEntries(formData);
+	const { id, createdBy } = Object.fromEntries(formData);
 
-	try {
-		connectToDB();
+	/* we get the current logged in user via authentication in auth.js */
+	const {
+		user: { username, sub },
+	} = await auth();
 
-		await Product.findByIdAndDelete(id);
-	} catch (error) {
-		console.log('get error =>', error);
-		throw new Error('failed to delete product');
+	/* compare the current logged in user to the createdBy id. If the createdBy id does not match the sub, 
+	throw an error */
+	if (createdBy !== sub) {
+		throw new Error("You can't delete this job");
+	} else {
+		/* else everything below takes place */
+		try {
+			connectToDB();
+
+			await Product.findByIdAndDelete({ _id: id, createdBy });
+		} catch (error) {
+			console.log('get error =>', error);
+			throw new Error('failed to delete product');
+		}
 	}
 
 	revalidatePath('/dashboard/products');

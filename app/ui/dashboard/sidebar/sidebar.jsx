@@ -12,6 +12,7 @@ const Sidebar = async () => {
 		user: { username, email, userImg },
 	} = await auth();
 
+	console.log('get username =>', username);
 	return (
 		<div className='cont sticky top-10'>
 			<div className='user flex items-center gap-5 mb-5'>

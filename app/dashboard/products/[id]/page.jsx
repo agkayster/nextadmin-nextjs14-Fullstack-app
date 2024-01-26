@@ -4,6 +4,7 @@ import { fetchSingleProduct } from '@/app/lib/data';
 import { updateProduct } from '@/app/lib/actions';
 
 const SingleProductPage = async ({ params }) => {
+	// console.log('get params =>', params);
 	/* destructure id from params */
 	const { id } = params;
 
@@ -18,7 +19,10 @@ const SingleProductPage = async ({ params }) => {
 		size,
 		address,
 		createdAt,
+		createdBy,
 	} = await fetchSingleProduct(id);
+
+	// console.log('get created by user =>', createdBy);
 
 	return (
 		<div className='cont flex gap-[3.13rem] mt-5'>
@@ -93,6 +97,12 @@ const SingleProductPage = async ({ params }) => {
 						placeholder={desc}
 						className='textarea p-5 border-2 border-solid border-[#2e374a] rounded-md bg-[#151c2c] 
             text-white my-2.5'></textarea>
+					<input
+						type='hidden'
+						id='createdBy'
+						name='createdBy'
+						value={createdBy.toString()}
+					/>
 					<button
 						type='submit'
 						className='w-full p-5 bg-teal-500 text-white border-none rounded-md cursor-pointer mt-5'>

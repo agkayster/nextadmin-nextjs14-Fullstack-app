@@ -12,6 +12,7 @@ const UsersPage = async ({ searchParams }) => {
 	const page = searchParams?.page || 1;
 
 	const { users, count } = await fetchUsers(q, page);
+	console.log('get users info =>', users);
 
 	return (
 		<div className='cont bg-[#182237] p-5 rounded-xl mt-5'>
