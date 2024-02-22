@@ -54,8 +54,8 @@ export const { signIn, signOut, auth } = NextAuth({
 		/* search for our user and pass the username and image into jwt */
 		async jwt({ token, user }) {
 			if (user) {
-				token.username = user.username;
-				token.userImg = user.userImg;
+				token.name = user.username;
+				token.picture = user.userImg;
 			}
 			// console.log('get token =>', token);
 			return token;
@@ -63,12 +63,32 @@ export const { signIn, signOut, auth } = NextAuth({
 		/* pass token information to session, which would help us reach it inside our component */
 		async session({ token, session }) {
 			if (token) {
-				session.user.username = token.username;
-				session.user.userImg = token.userImg;
+				session.user.name = token.name;
 				session.user.sub = token.sub;
 			}
 			// console.log('get session =>', session);
 			return session;
 		},
 	},
+	// callbacks: {
+	// 	/* search for our user and pass the username and image into jwt */
+	// 	async jwt({ token, user }) {
+	// 		if (user) {
+	// 			token.username = user.username;
+	// 			token.userImg = user.userImg;
+	// 		}
+	// 		// console.log('get token =>', token);
+	// 		return token;
+	// 	},
+	// 	/* pass token information to session, which would help us reach it inside our component */
+	// 	async session({ token, session }) {
+	// 		if (token) {
+	// 			session.user.username = token.username;
+	// 			session.user.userImg = token.userImg;
+	// 			session.user.sub = token.sub;
+	// 		}
+	// 		// console.log('get session =>', session);
+	// 		return session;
+	// 	},
+	// },
 });
