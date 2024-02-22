@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormState } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 
@@ -10,7 +10,7 @@ const LoginForm = () => {
 
 	// const handleLogin = async (formData) => {
 	// 	const data = await authenticate(formData);
-	// 	data.error && setError(data.error);
+	// 	data === "Invalid credentials." && setError(data.error);
 	// };
 
 	return (
