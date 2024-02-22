@@ -35,6 +35,9 @@ const Sidebar = async () => {
 						<span className='userTitle text-xs text-[#b7bac1] font-bold'>
 							{isAdmin ? 'Admin' : 'User'}
 						</span>
+						<span className='userTitle text-xs text-[#b7bac1] font-bold'>
+							{email}
+						</span>
 					</div>
 				</div>
 			))}
@@ -73,3 +76,4 @@ const Sidebar = async () => {
 };
 
 export default Sidebar;
+
